@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 games <- read.csv("~/data-for-datafest-2019/games.csv")
 gps <- read.csv("~/data-for-datafest-2019/gps.csv")
 rpe <- read.csv("~/data-for-datafest-2019/rpe.csv")
-wellness <- read.csv("/Users/Jack/data-for-datafest-2019/wellness.csv")
+wellness <- read.csv("~/data-for-datafest-2019/wellness.csv")
 ```
 
 ```{r}
