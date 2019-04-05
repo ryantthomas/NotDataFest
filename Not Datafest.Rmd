@@ -11,13 +11,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 # Importing data
-games <- read.csv("/Users/Jack/Downloads/data-for-datafest-2019/games.csv")
-gps <- read.csv("/Users/Jack/Downloads/data-for-datafest-2019/gps.csv")
-rpe <- read.csv("/Users/Jack/Downloads/data-for-datafest-2019/rpe.csv")
-wellness <- read.csv("/Users/Jack/Downloads/data-for-datafest-2019/wellness.csv")
+games <- read.csv("~/data-for-datafest-2019/games.csv")
+gps <- read.csv("~/data-for-datafest-2019/gps.csv")
+rpe <- read.csv("~/data-for-datafest-2019/rpe.csv")
+wellness <- read.csv("~/data-for-datafest-2019/wellness.csv")
 ```
 
 ```{r}
 # ryan sucks eggs
 ```
+
+
 
