@@ -14,12 +14,39 @@ knitr::opts_chunk$set(echo = TRUE)
 games <- read.csv("~/data-for-datafest-2019/games.csv")
 gps <- read.csv("~/data-for-datafest-2019/gps.csv")
 rpe <- read.csv("~/data-for-datafest-2019/rpe.csv")
-wellness <- read.csv("~/data-for-datafest-2019/wellness.csv")
+wellness <- read.csv("/Users/Jack/data-for-datafest-2019/wellness.csv")
 ```
 
 ```{r}
 # ryan sucks eggs
+# Installing libraries
+library(dplyr)
+library(ggplot2)
+library(e1071)
+library(neuralnet)
 ```
 
+<<<<<<< HEAD
+#Data Cleaning
+```{r}
 
+```
 
+```{r}
+
+```
+=======
+```{r}
+# Creating samples
+gpsSample <- sample_n(gps, 50000)
+>>>>>>> 109f9e1c9dbd3f767f0aab857a9cff7a02dc0849
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```
