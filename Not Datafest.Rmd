@@ -18,6 +18,17 @@ wellness <- read.csv("/Users/Jack/Downloads/data-for-datafest-2019/wellness.csv"
 ```
 
 ```{r}
-# ryan sucks eggs
+# Installing libraries
+library(dplyr)
+library(ggplot2)
+library(e1071)
+library(neuralnet)
 ```
 
+```{r}
+# Creating samples
+gpsSample <- sample_n(gps, 50000)
+
+## Ryan still sucks eggs
+
+```
