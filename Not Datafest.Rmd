@@ -18,7 +18,6 @@ wellness <- read.csv("/Users/Jack/data-for-datafest-2019/wellness.csv")
 ```
 
 ```{r}
-# ryan sucks eggs
 # Installing libraries
 library(dplyr)
 library(ggplot2)
