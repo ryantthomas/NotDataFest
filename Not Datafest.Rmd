@@ -55,12 +55,7 @@ ggplot(wellnessJack, aes(SleepHours, Fatigue)) +
 
 ```
 
-<<<<<<< HEAD
-
---------------------------------------------------------------
-=======
 # Cameron's section
->>>>>>> bedcff5e72133e77e1cafc15a562ad7fde0b0960
 ```{r}
 gamesCameron <- games
 gpsCameron <- gps
@@ -92,7 +87,7 @@ wellnessCameron <- wellness
 ```
 
 ```{r}
-#Function that removes collinearity for data
+#Function that Returns Graphs of the variables with the greatest correlations
 graph.correlations <- function(data, c) {
   data <- data[,map_lgl(data, is.numeric)]
   #Correlation of all Variables
@@ -162,7 +157,7 @@ graph.correlations <- function(data, c) {
 ```
 
 ```{r}
-graph.correlations(gps, 0.9)
+graph.correlations(wellness, 0.7)
 ```
 
 
