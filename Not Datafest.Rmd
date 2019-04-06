@@ -94,6 +94,25 @@ ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) +
 ```
 
 --------------------------------------------------------------
+#Ryan's Section
+#Creating Dataset marked by intervals
+```{r}
+#Separating Minutes
+MinutesClock <- strsplit(as.character(gps$GameClock), ":")
+MinutesClock <- sapply(MinutesClock, "[[", 2)
+gps$MinutesClock <- MinutesClock
+
+#Condensing Dataset by Minutes
+Minutes.gps = gps %>%
+  group_by(PlayerID, GameID, Half, MinutesClock) %>%
+  summarize_if(is.numeric, mean)
+```
+
+
+```{r}
+Minutes.gps
+```
+
 ```{r}
 #Ryan
 #Summarized GPS by player
@@ -183,23 +202,7 @@ graph.correlations(wellness, 0.7)
 #Graphs RPE correlations above 0.7
 graph.correlations(rpe, 0.7)
 ```
-#Creating Dataset marked by intervals
-```{r}
-#Separating Minutes
-MinutesClock <- strsplit(as.character(gps$GameClock), ":")
-MinutesClock <- sapply(MinutesClock, "[[", 2)
-gps$MinutesClock <- MinutesClock
 
-#Condensing Dataset by Minutes
-Minutes.gps = gps %>%
-  group_by(PlayerID, GameID, Half, MinutesClock) %>%
-  summarize_if(is.numeric, mean)
-```
-
-
-```{r}
-Minutes.gps
-```
 
 
 
