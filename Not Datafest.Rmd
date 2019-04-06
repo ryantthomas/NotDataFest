@@ -35,7 +35,7 @@ library(neuralnet)
 ```{r}
 
 ```
-=======
+
 ```{r}
 # Creating samples
 gpsSample <- sample_n(gps, 50000)
