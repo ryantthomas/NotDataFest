@@ -107,6 +107,8 @@ gps$MinutesClock <- MinutesClock
 Minutes.gps = gps %>%
   group_by(PlayerID, GameID, Half, MinutesClock) %>%
   summarize_if(is.numeric, mean)
+
+Minutes.gps$MinutesClock <- as.numeric(Minutes.gps$MinutesClock)
 ```
 
 
@@ -132,7 +134,6 @@ Minutes.gps = gps %>%
   group_by(PlayerID, GameID, Half, MinutesClock) %>%
   summarize_if(is.numeric, mean)
 ```
-
 
 ```{r}
 head(Minutes.gps)
@@ -246,6 +247,9 @@ graph.correlations(rpe, 0.7)
 ```{r}
 #Graph of Minutes.gps with correlations above 0.7
 graph.correlations(Minutes.gps, 0.7)
+```
+```{r}
+graph.correlations(FullDataset, 0.7)
 ```
 
 
