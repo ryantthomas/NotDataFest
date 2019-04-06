@@ -40,22 +40,17 @@ library(neuralnet)
 <<<<<<< HEAD
 
 >>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
-```{r}
-# Cleaning and shit
-wellness <- wellness[, -c()]
-
-
-```
 =======
 --------------------------------------------------------------
 ```{r}
 #Cameron
 ```
 --------------------------------------------------------------
+
 ```{r}
-#Jack Leary
-# Creating samples
-gpsSample <- sample_n(gps, 50000)
+# Jack
+
+
 ```
 
 ```{r}
