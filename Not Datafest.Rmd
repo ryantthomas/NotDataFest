@@ -14,7 +14,6 @@ knitr::opts_chunk$set(echo = TRUE)
 games <- read.csv("~/data-for-datafest-2019/games.csv")
 gps <- read.csv("~/data-for-datafest-2019/gps.csv")
 rpe <- read.csv("~/data-for-datafest-2019/rpe.csv")
-wellness <- read.csv("/Users/Jack/data-for-datafest-2019/wellness.csv")
 wellness <- read.csv("~/data-for-datafest-2019/wellness.csv")
 ```
 
@@ -26,11 +25,9 @@ library(e1071)
 library(neuralnet)
 ```
 
-
 #Data Cleaning
 --------------------------------------------------------------
 ```{r}
-
 #Shyam
 ```
 
@@ -38,9 +35,14 @@ library(neuralnet)
 >>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
 =======
 =======
+
 ```{r}
-# Cleaning and shit
-wellness <- wellness[, -c()]
+# Proprietary datasets
+gamesJack <- games
+gpsJack <- gps
+rpeJack <- rpe
+wellnessJack <- wellness
+
 
 ```
 
@@ -51,16 +53,10 @@ wellness <- wellness[, -c()]
 ```
 --------------------------------------------------------------
 
-```{r}
-# Jack
-
-
-```
 
 ```{r}
 # Creating samples
 ```
-
 
 --------------------------------------------------------------
 ```{r}
@@ -73,6 +69,22 @@ wellness <- wellness[, -c()]
 
 #Ryan
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Exploratory Data Analysis
 --------------------------------------------------------------
@@ -100,6 +112,23 @@ wellness <- wellness[, -c()]
 ```{r}
 #Ryan
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Additional Research
 --------------------------------------------------------------
