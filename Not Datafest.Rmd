@@ -44,12 +44,16 @@ wellnessJack <- wellness
 
 # Cameron's section
 ```{r}
-
 gamesCameron <- games
 gpsCameron <- gps
 rpeCameron <- rpe
 wellnessCameron <- wellness
 ```
+
+```{r}
+
+```
+
 --------------------------------------------------------------
 
 
