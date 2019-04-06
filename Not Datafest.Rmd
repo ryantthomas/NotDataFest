@@ -31,6 +31,7 @@ library(dplyr)
 library(tidyr)
 library(plotly)
 library(reshape2)
+library(chron)
 ```
 
 ```{r}
@@ -59,6 +60,8 @@ wellnessJack <- wellnessJack[, -c(7,8)]
 ggplot(wellnessJack, aes(SleepHours, Fatigue)) +
   geom_point()
 
+
+```
 
 
 # Cameron's section
@@ -125,8 +128,74 @@ View()
 
 
 --------------------------------------------------------------
+#Ryan's Section
+
+#Creating Dataset marked by intervals
+```{r}
+#Separating Minutes
+MinutesClock <- strsplit(as.character(gps$GameClock), ":")
+MinutesClock <- sapply(MinutesClock, "[[", 2)
+gps$MinutesClock <- MinutesClock
+
+#Condensing Dataset by Minutes
+Minutes.gps = gps %>%
+  group_by(PlayerID, GameID, Half, MinutesClock) %>%
+  summarize_if(is.numeric, mean)
+
+Minutes.gps$MinutesClock <- as.numeric(Minutes.gps$MinutesClock)
+```
+
+
+```{r}
+head(Minutes.gps)
+```
+
+```{r}
+
+```
+
+
+
+#Creating Dataset marked by intervals
+```{r}
+#Separating Minutes
+MinutesClock <- strsplit(as.character(gps$GameClock), ":")
+MinutesClock <- sapply(MinutesClock, "[[", 2)
+gps$MinutesClock <- MinutesClock
+
+#Condensing Dataset by Minutes
+Minutes.gps = gps %>%
+  group_by(PlayerID, GameID, Half, MinutesClock) %>%
+  summarize_if(is.numeric, mean)
+```
+
+```{r}
+head(Minutes.gps)
+```
+
+#Combining Everything into one full dataset
+```{r}
+#Full dataset = combo of all
+FullDataset <- games
+FullDataset$GameID <- games$'ï..GameID'
+FullDataset$'ï..GameID' <- NULL
+FullDataset <- full_join(FullDataset, Minutes.gps)
+FullDataset <- full_join(FullDataset, rpe)
+FullDataset <- full_join(FullDataset, wellness)
+```
+```{r}
+#View
+head(FullDataset)
+```
+
 ```{r}
 #Ryan
+#Summarized GPS by player
+summarized.players = 
+  gps %>%
+  group_by(PlayerID) %>%
+  summarize_if(is.numeric, mean)
+str(summarized.players)
 ```
 
 ```{r}
@@ -210,20 +279,12 @@ graph.correlations(rpe, 0.7)
 ```
 
 ```{r}
-#Graphs Games Correlations above 0.4
-graph.correlations(games, 0.4)
+#Graph of Minutes.gps with correlations above 0.7
+graph.correlations(Minutes.gps, 0.7)
 ```
-
-
 ```{r}
-#Graphs GPS Correlations above 0.6
-graph.correlations(gps, 0.6)
+graph.correlations(FullDataset, 0.7)
 ```
-
-
-
-
-
 
 
 
@@ -252,16 +313,41 @@ graph.correlations(gps, 0.6)
 # Creating samples
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 ```{r}
 #Jon
 
-```
+=======
 --------------------------------------------------------------
 ```{r}
-#Ryan
+#Jon
 ```
+
+--------------------------------------------------------------
+```{r}
+ggplot(na.omit(FullDataset)) +
+  geom_histogram(aes(x= Fatigue, fill = Menstruation), binwidth = 0.5) +
+  facet_wrap(~Menstruation)
+>>>>>>> f3a947852f5d1e862778bb1b91c2248e20375a07
+```
+```{r}
+ggplot(na.omit(FullDataset), aes(x = Menstruation, y = Fatigue)) +
+  geom_boxplot(aes(fill = Menstruation))
+```
+```{r}
+head(FullDataset)
+```
+
+#Does this mean that Menstruation helps people play rugby better????
+```{r}
+#I think yes! - and so does this p value!
+summary(aov(Fatigue~Menstruation, data= FullDataset))
+```
+
+
+--------------------------------------------------------------
 
 
 
@@ -299,7 +385,6 @@ graph.correlations(gps, 0.6)
 ```
 --------------------------------------------------------------
 ```{r}
->>>>>>> 0ae102f744f82624190f8ee0dd0d3327f9ae51dc
 #Jon 
 ```
 --------------------------------------------------------------
