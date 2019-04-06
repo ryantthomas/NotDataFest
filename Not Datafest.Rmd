@@ -25,7 +25,8 @@ library(e1071)
 library(neuralnet)
 ```
 
-<<<<<<< HEAD
+
+#Is this updated?
 #Data Cleaning
 ```{r}
 
@@ -38,7 +39,12 @@ library(neuralnet)
 ```{r}
 # Creating samples
 gpsSample <- sample_n(gps, 50000)
->>>>>>> 109f9e1c9dbd3f767f0aab857a9cff7a02dc0849
+```
+
+```{r}
+# Creating samples
+```
+
 
 ```{r}
 
