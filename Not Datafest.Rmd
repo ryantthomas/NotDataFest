@@ -24,7 +24,17 @@ library(ggplot2)
 library(e1071)
 library(neuralnet)
 ```
+ 
 
+<<<<<<< HEAD
+=======
+
+#Data Cleaning
+```{r}
+
+```
+
+>>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
 ```{r}
 # Cleaning and shit
 wellness <- wellness[, -c()]
