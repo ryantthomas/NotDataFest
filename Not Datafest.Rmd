@@ -42,23 +42,34 @@ head(wellness)
 
 
 ```{r}
-# Cleaning and shit
-wellness <- wellness[, -c()]
+# Proprietary datasets
+gamesJack <- games
+gpsJack <- gps
+rpeJack <- rpe
+wellnessJack <- wellness
+
 
 ```
 
+<<<<<<< HEAD
 
 --------------------------------------------------------------
+=======
+# Cameron's section
+>>>>>>> bedcff5e72133e77e1cafc15a562ad7fde0b0960
 ```{r}
-#Cameron
+gamesCameron <- games
+gpsCameron <- gps
+rpeCameron <- rpe
+wellnessCameron <- wellness
 ```
+
+```{r}
+
+```
+
 --------------------------------------------------------------
 
-```{r}
-# Jack
-
-
-```
 
 ```{r}
 # Creating samples
@@ -169,6 +180,7 @@ graph.correlations(gps, 0.9)
 --------------------------------------------------------------
 ```{r}
 #Cameron
+
 ```
 --------------------------------------------------------------
 ```{r}
