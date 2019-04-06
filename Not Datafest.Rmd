@@ -94,6 +94,12 @@ ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) +
 --------------------------------------------------------------
 ```{r}
 #Ryan
+#Summarized GPS by player
+summarized.players = 
+  gps %>%
+  group_by(PlayerID) %>%
+  summarize_if(is.numeric, mean)
+str(summarized.players)
 ```
 
 ```{r}
@@ -176,16 +182,7 @@ graph.correlations(wellness, 0.7)
 graph.correlations(rpe, 0.7)
 ```
 
-```{r}
-#Graphs Games Correlations above 0.4
-graph.correlations(games, 0.4)
-```
 
-
-```{r}
-#Graphs GPS Correlations above 0.6
-graph.correlations(gps, 0.6)
-```
 
 
 
