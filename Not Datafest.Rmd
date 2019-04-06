@@ -24,6 +24,13 @@ library(ggplot2)
 library(e1071)
 library(neuralnet)
 library(purrr)
+library(magrittr)
+library(tidyverse)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(reshape2)
 ```
 
 ```{r}
@@ -61,11 +68,14 @@ gamesCameron <- games
 gpsCameron <- gps
 rpeCameron <- rpe
 wellnessCameron <- wellness
-
 ```
 
 ```{r}
-
+wellnessCameron_scales <- wellnessCameron %>% select(Fatigue, Soreness, Desire, Irritability, SleepQuality)
+cormat <- round(cor(wellnessCameron_scales), 2)
+melted_cormat <- melt(cormat)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()
 ```
 
 --------------------------------------------------------------
