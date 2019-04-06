@@ -60,6 +60,8 @@ ggplot(wellnessJack, aes(SleepHours, Fatigue)) +
   geom_point()
 
 
+```
+
 
 # Cameron's section
 ```{r}
