@@ -293,16 +293,12 @@ ggplot(na.omit(FullDataset)) +
 ggplot(na.omit(FullDataset), aes(x = Menstruation, y = Fatigue)) +
   geom_boxplot(aes(fill = Menstruation))
 ```
-```{r}
-head(FullDataset)
-```
 
 #Does this mean that Menstruation helps people play rugby better????
 ```{r}
 #I think yes! - and so does this p value!
 summary(aov(Fatigue~Menstruation, data= FullDataset))
 ```
-
 
 --------------------------------------------------------------
 
