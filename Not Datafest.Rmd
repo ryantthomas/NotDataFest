@@ -312,14 +312,12 @@ graph.correlations(FullDataset, 0.7)
 ```{r}
 # Creating samples
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 
 ```{r}
 #Jon
-
-=======
+```
 --------------------------------------------------------------
 ```{r}
 #Jon
@@ -330,10 +328,18 @@ graph.correlations(FullDataset, 0.7)
 ggplot(na.omit(FullDataset)) +
   geom_histogram(aes(x= Fatigue, fill = Menstruation), binwidth = 0.5) +
   facet_wrap(~Menstruation)
->>>>>>> f3a947852f5d1e862778bb1b91c2248e20375a07
 ```
+
 ```{r}
 ggplot(na.omit(FullDataset), aes(x = Menstruation, y = Fatigue)) +
+  geom_boxplot(aes(fill = Menstruation))
+```
+```{r}
+ggplot(na.omit(FullDataset), aes(x = Menstruation, y = Soreness)) +
+  geom_boxplot(aes(fill = Menstruation))
+```
+```{r}
+ggplot(na.omit(FullDataset), aes(x = Menstruation, y = Desire)) +
   geom_boxplot(aes(fill = Menstruation))
 ```
 
