@@ -31,10 +31,6 @@ library(neuralnet)
 #Shyam
 ```
 
-<<<<<<< HEAD
->>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
-=======
-=======
 
 ```{r}
 # Proprietary datasets
@@ -46,10 +42,12 @@ wellnessJack <- wellness
 
 ```
 
->>>>>>> 5f2a721098a6ea7f15c6d204227d9371fc0cc578
---------------------------------------------------------------
 ```{r}
-#Cameron
+
+gamesCameron <- games
+gpsCameron <- gps
+rpeCameron <- rpe
+wellnessCameron <- wellness
 ```
 --------------------------------------------------------------
 
