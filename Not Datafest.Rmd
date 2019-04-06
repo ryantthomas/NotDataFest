@@ -157,8 +157,26 @@ graph.correlations <- function(data, c) {
 ```
 
 ```{r}
+#Graphs Wellness correlations above 0.7
 graph.correlations(wellness, 0.7)
 ```
+
+```{r}
+#Graphs RPE correlations above 0.7
+graph.correlations(rpe, 0.7)
+```
+
+```{r}
+#Graphs Games Correlations above 0.4
+graph.correlations(games, 0.4)
+```
+
+
+```{r}
+#Graphs GPS Correlations above 0.6
+graph.correlations(gps, 0.6)
+```
+
 
 
 
