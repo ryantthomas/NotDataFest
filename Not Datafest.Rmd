@@ -42,6 +42,7 @@ wellnessJack <- wellness
 
 ```
 
+# Cameron's section
 ```{r}
 
 gamesCameron <- games
