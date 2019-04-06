@@ -23,7 +23,16 @@ library(dplyr)
 library(ggplot2)
 library(e1071)
 library(neuralnet)
+library(purrr)
 ```
+
+```{r}
+head(games)
+head(gps)
+head(rpe)
+head(wellness)
+```
+
 
 #Data Cleaning
 --------------------------------------------------------------
@@ -31,17 +40,14 @@ library(neuralnet)
 #Shyam
 ```
 
-<<<<<<< HEAD
->>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
-=======
-=======
+
 ```{r}
 # Cleaning and shit
 wellness <- wellness[, -c()]
 
 ```
 
->>>>>>> 5f2a721098a6ea7f15c6d204227d9371fc0cc578
+
 --------------------------------------------------------------
 ```{r}
 #Cameron
@@ -66,13 +72,82 @@ wellness <- wellness[, -c()]
 
 --------------------------------------------------------------
 ```{r}
-
 #Ryan
 ```
 
+```{r}
+#Function that removes collinearity for data
+graph.correlations <- function(data, c) {
+  data <- data[,map_lgl(data, is.numeric)]
+  #Correlation of all Variables
+  correlation.matrix <- cor(data, use = "complete.obs")
+  correlation.dataset <- as.data.frame(correlation.matrix)
+  most.correlation <- which(abs(correlation.matrix) < 1 & abs(correlation.matrix) > c)
 
+  rows.list <- list()
+  columns.list <- list()
+  j <- 1
+  #For Loop for finding maximum correlations
+  for(i in most.correlation) {
+    #Correlation
+    row <- ceiling(i/ncol(data))
+    column <- ifelse(i%%ncol(data) == 0, ncol(data), i%%ncol(data))
+    rows.list[[j]] <- rownames(correlation.dataset[row,])
+    columns.list[[j]] <- names(correlation.dataset)[column]
+    j = j+1
+  }
 
+  row.column.names = cbind(rows.list, columns.list)
 
+  #New Dataframe To hold Rows/ Columns
+  row.column.dataframe <- data.frame(
+    row = NULL,
+    column = NULL
+  )
+  #putting values in dataframe
+  for(i in 1:length(rows.list)) {
+    newRow = data.frame(row = rows.list[[i]], column = columns.list[[i]])
+    row.column.dataframe <- rbind(row.column.dataframe, newRow)
+  }
+
+  #Changing variable types to character
+  row.column.dataframe$row <- as.character(row.column.dataframe$row)
+  row.column.dataframe$column <- as.character(row.column.dataframe$column)
+
+  #Removing Duplicates
+  for (i in 1:nrow(row.column.dataframe))
+  {
+      row.column.dataframe[i, ] = sort(row.column.dataframe[i, ])
+  }
+  row.column.dataframe <- row.column.dataframe[!duplicated(row.column.dataframe),]
+
+  #Dataframe of Variables with the most Correlation
+  table <- row.column.dataframe
+  
+  #creates new dataframe without correlations above c
+  new.data = data
+  for(i in 1:nrow(table)) {
+    new.data[,table[i,2]] <- NULL
+  }
+  
+  #For Loop For Creating Scatterplots of data with the Greatest Correlation
+  for(i in 1:nrow(row.column.dataframe)) {
+    #Extract column and row variable
+    row <- row.column.dataframe[[i, 1]]
+    column <- row.column.dataframe[[i, 2]]
+    #Plot
+    print(ggplot(data) +
+      geom_point(aes_string(x = row, y = column), color = "blue4") +
+      geom_smooth(aes_string(x = row, y = column)) +
+      theme_minimal() +
+      ggtitle("Correlations"))
+  }
+}
+```
+
+```{r}
+graph.correlations(gps, 0.9)
+```
 
 
 
