@@ -86,9 +86,43 @@ ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) +
 
 --------------------------------------------------------------
 ```{r}
-
 #Jon 
+gamesJon <- games
+gpsJon <- gps
+rpeJon <- rpe
+wellnessJon <- wellness
+
+
+AllJon=regsubsets(Fatigue~ Soreness+Desire+Irritability+SleepHours+SleepQuality+Pain+Illness+Menstruation+Nutrition+NutritionAdjustment+USG+TrainingReadiness, data=wellnessJon, nbest=2)
+          
 ```
+```{r}
+library(car)
+AllWJon=lm(Fatigue~ Soreness+Desire+Irritability+SleepHours+SleepQuality+Pain+Illness+Menstruation+Nutrition+NutritionAdjustment+USG+TrainingReadiness, data=wellnessJon)
+str(wellnessJon)
+```
+
+
+```{r}
+pairs(~Fatigue+Soreness+Desire+Irritability+SleepHours+SleepQuality+Pain+Illness+Menstruation+Nutrition+NutritionAdjustment+USG+TrainingReadiness, data=wellnessJon)
+
+
+```
+
+```{r}
+wellnessJon$Pain= ifelse(wellnessJon$Pain=='Yes',1,0)
+wellnessJon$Illness= ifelse(wellnessJon$Illness=='Yes',2,ifelse(wellnessJon$Illness=='Slightly Off', 1,0))
+wellnessJon$Menstruation=ifelse(wellnessJon$Menstruation=='Yes',1,0)
+wellnessJon$Nutrition=ifelse(wellnessJon$Nutrition=='Excellent',2,ifelse(wellnessJon$Nutrition=='Okay',1,0))
+wellnessJon$NutritionAdjustment=ifelse(wellnessJon$NutritionAdjustment=='Yes', 1,0)
+
+wellnessJon<- wellnessJon[-c(11,17)]
+graph.correlations(wellnessJon, 0.5)
+```
+```{r}
+View()
+```
+
 
 --------------------------------------------------------------
 ```{r}
@@ -218,12 +252,11 @@ graph.correlations(gps, 0.6)
 # Creating samples
 ```
 <<<<<<< HEAD
---------------------------------------------------------------
+
+
 ```{r}
-=======
---------------------------------------------------------------
-```{r}
-#Jon 
+#Jon
+
 ```
 --------------------------------------------------------------
 ```{r}
