@@ -39,26 +39,16 @@ head(gps)
 head(rpe)
 head(wellness)
 ```
-<<<<<<< HEAD
- 
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> fb7ff2b5d5006b46c60082266ab27dabad33235f
 
 #Data Cleaning
 --------------------------------------------------------------
 ```{r}
 #Shyam
 ```
-<<<<<<< HEAD
 
->>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
 
 ```{r}
-# Cleaning and shit
-wellness <- wellness[, -c()]
 # Proprietary datasets
 gamesJack <- games
 gpsJack <- gps
@@ -239,12 +229,8 @@ graph.correlations(gps, 0.6)
 ```{r}
 #Ryan
 ```
-<<<<<<< HEAD
 
 
-=======
->>>>>>> fb7ff2b5d5006b46c60082266ab27dabad33235f
->>>>>>> c9bbc4bd19e7646e412087f3a8e8f42fab7f2744
 
 
 
