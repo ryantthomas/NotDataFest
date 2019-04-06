@@ -31,6 +31,7 @@ library(dplyr)
 library(tidyr)
 library(plotly)
 library(reshape2)
+library(chron)
 ```
 
 ```{r}
@@ -182,12 +183,23 @@ graph.correlations(wellness, 0.7)
 #Graphs RPE correlations above 0.7
 graph.correlations(rpe, 0.7)
 ```
+#Creating Dataset marked by intervals
+```{r}
+#Separating Minutes
+MinutesClock <- strsplit(as.character(gps$GameClock), ":")
+MinutesClock <- sapply(MinutesClock, "[[", 2)
+gps$MinutesClock <- MinutesClock
+
+#Condensing Dataset by Minutes
+Minutes.gps = gps %>%
+  group_by(PlayerID, GameID, Half, MinutesClock) %>%
+  summarize_if(is.numeric, mean)
+```
 
 
-
-
-
-
+```{r}
+Minutes.gps
+```
 
 
 
@@ -216,18 +228,17 @@ graph.correlations(rpe, 0.7)
 ```{r}
 # Creating samples
 ```
-<<<<<<< HEAD
 --------------------------------------------------------------
 ```{r}
-=======
---------------------------------------------------------------
-```{r}
-#Jon 
+#Jon
 ```
+
 --------------------------------------------------------------
 ```{r}
 #Ryan
 ```
+
+--------------------------------------------------------------
 
 
 
@@ -265,7 +276,6 @@ graph.correlations(rpe, 0.7)
 ```
 --------------------------------------------------------------
 ```{r}
->>>>>>> 0ae102f744f82624190f8ee0dd0d3327f9ae51dc
 #Jon 
 ```
 --------------------------------------------------------------
