@@ -25,13 +25,7 @@ library(ggplot2)
 library(e1071)
 library(neuralnet)
 ```
-<<<<<<< HEAD
- 
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> fb7ff2b5d5006b46c60082266ab27dabad33235f
 
 #Data Cleaning
 --------------------------------------------------------------
@@ -39,15 +33,13 @@ library(neuralnet)
 
 #Shyam
 ```
-<<<<<<< HEAD
 
->>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
 ```{r}
 # Cleaning and shit
 wellness <- wellness[, -c()]
 
 ```
-=======
+
 --------------------------------------------------------------
 ```{r}
 #Cameron
@@ -75,7 +67,6 @@ gpsSample <- sample_n(gps, 50000)
 
 #Ryan
 ```
-<<<<<<< HEAD
 
 #Exploratory Data Analysis
 --------------------------------------------------------------
