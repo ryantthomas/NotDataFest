@@ -47,6 +47,11 @@ gamesJack <- games
 gpsJack <- gps
 rpeJack <- rpe
 wellnessJack <- wellness
+wellnessJack <- wellnessJack[, -c(7,8)]
+
+ggplot(wellnessJack, aes(SleepHours, Fatigue)) +
+  geom_point()
+
 
 
 ```
@@ -62,6 +67,7 @@ gamesCameron <- games
 gpsCameron <- gps
 rpeCameron <- rpe
 wellnessCameron <- wellness
+
 ```
 
 ```{r}
