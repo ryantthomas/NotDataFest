@@ -23,6 +23,21 @@ library(dplyr)
 library(ggplot2)
 library(e1071)
 library(neuralnet)
+library(purrr)
+library(magrittr)
+library(tidyverse)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(reshape2)
+```
+
+```{r}
+head(games)
+head(gps)
+head(rpe)
+head(wellness)
 ```
 <<<<<<< HEAD
  
@@ -40,27 +55,182 @@ library(neuralnet)
 <<<<<<< HEAD
 
 >>>>>>> d4a80dd19bc33d9d2e6e7a404ae4b9ed349953f4
+
 ```{r}
 # Cleaning and shit
 wellness <- wellness[, -c()]
+# Proprietary datasets
+gamesJack <- games
+gpsJack <- gps
+rpeJack <- rpe
+wellnessJack <- wellness
+wellnessJack <- wellnessJack[, -c(7,8)]
+
+ggplot(wellnessJack, aes(SleepHours, Fatigue)) +
+  geom_point()
 
 
+
+# Cameron's section
+```{r}
+gamesCameron <- games
+gpsCameron <- gps
+rpeCameron <- rpe
+wellnessCameron <- wellness
 ```
-=======
+
+```{r}
+wellnessCameron_scales <- wellnessCameron %>% select(Fatigue, Soreness, Desire, Irritability, SleepQuality)
+cormat <- round(cor(wellnessCameron_scales), 2)
+melted_cormat <- melt(cormat)
+ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile()
+```
+
+--------------------------------------------------------------
+
+
+```{r}
+# Creating samples
+```
+
+--------------------------------------------------------------
+```{r}
+
+#Jon 
+```
+
+--------------------------------------------------------------
+```{r}
+#Ryan
+```
+
+```{r}
+#Function that Returns Graphs of the variables with the greatest correlations
+graph.correlations <- function(data, c) {
+  data <- data[,map_lgl(data, is.numeric)]
+  #Correlation of all Variables
+  correlation.matrix <- cor(data, use = "complete.obs")
+  correlation.dataset <- as.data.frame(correlation.matrix)
+  most.correlation <- which(abs(correlation.matrix) < 1 & abs(correlation.matrix) > c)
+
+  rows.list <- list()
+  columns.list <- list()
+  j <- 1
+  #For Loop for finding maximum correlations
+  for(i in most.correlation) {
+    #Correlation
+    row <- ceiling(i/ncol(data))
+    column <- ifelse(i%%ncol(data) == 0, ncol(data), i%%ncol(data))
+    rows.list[[j]] <- rownames(correlation.dataset[row,])
+    columns.list[[j]] <- names(correlation.dataset)[column]
+    j = j+1
+  }
+
+  row.column.names = cbind(rows.list, columns.list)
+
+  #New Dataframe To hold Rows/ Columns
+  row.column.dataframe <- data.frame(
+    row = NULL,
+    column = NULL
+  )
+  #putting values in dataframe
+  for(i in 1:length(rows.list)) {
+    newRow = data.frame(row = rows.list[[i]], column = columns.list[[i]])
+    row.column.dataframe <- rbind(row.column.dataframe, newRow)
+  }
+
+  #Changing variable types to character
+  row.column.dataframe$row <- as.character(row.column.dataframe$row)
+  row.column.dataframe$column <- as.character(row.column.dataframe$column)
+
+  #Removing Duplicates
+  for (i in 1:nrow(row.column.dataframe))
+  {
+      row.column.dataframe[i, ] = sort(row.column.dataframe[i, ])
+  }
+  row.column.dataframe <- row.column.dataframe[!duplicated(row.column.dataframe),]
+
+  #Dataframe of Variables with the most Correlation
+  table <- row.column.dataframe
+  
+  #creates new dataframe without correlations above c
+  new.data = data
+  for(i in 1:nrow(table)) {
+    new.data[,table[i,2]] <- NULL
+  }
+  
+  #For Loop For Creating Scatterplots of data with the Greatest Correlation
+  for(i in 1:nrow(row.column.dataframe)) {
+    #Extract column and row variable
+    row <- row.column.dataframe[[i, 1]]
+    column <- row.column.dataframe[[i, 2]]
+    #Plot
+    print(ggplot(data) +
+      geom_point(aes_string(x = row, y = column), color = "blue4") +
+      geom_smooth(aes_string(x = row, y = column)) +
+      theme_minimal() +
+      ggtitle("Correlations"))
+  }
+}
+```
+
+```{r}
+#Graphs Wellness correlations above 0.7
+graph.correlations(wellness, 0.7)
+```
+
+```{r}
+#Graphs RPE correlations above 0.7
+graph.correlations(rpe, 0.7)
+```
+
+```{r}
+#Graphs Games Correlations above 0.4
+graph.correlations(games, 0.4)
+```
+
+
+```{r}
+#Graphs GPS Correlations above 0.6
+graph.correlations(gps, 0.6)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Exploratory Data Analysis
+--------------------------------------------------------------
+```{r}
+#Shyam
+```
 --------------------------------------------------------------
 ```{r}
 #Cameron
+
 ```
 --------------------------------------------------------------
 ```{r}
 #Jack Leary
-# Creating samples
-gpsSample <- sample_n(gps, 50000)
 ```
 
 ```{r}
 # Creating samples
 ```
+<<<<<<< HEAD
+--------------------------------------------------------------
+```{r}
+=======
 --------------------------------------------------------------
 ```{r}
 #Jon 
@@ -75,3 +245,46 @@ gpsSample <- sample_n(gps, 50000)
 =======
 >>>>>>> fb7ff2b5d5006b46c60082266ab27dabad33235f
 >>>>>>> c9bbc4bd19e7646e412087f3a8e8f42fab7f2744
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Additional Research
+--------------------------------------------------------------
+```{r}
+#Shyam
+```
+--------------------------------------------------------------
+```{r}
+#Cameron
+```
+--------------------------------------------------------------
+```{r}
+#Jack Leary
+```
+
+```{r}
+# Creating samples
+```
+--------------------------------------------------------------
+```{r}
+>>>>>>> 0ae102f744f82624190f8ee0dd0d3327f9ae51dc
+#Jon 
+```
+--------------------------------------------------------------
+```{r}
+#Ryan
+```
+
