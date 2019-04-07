@@ -32,6 +32,7 @@ library(tidyr)
 library(plotly)
 library(reshape2)
 library(chron)
+library(leaps)
 ```
 
 ```{r}
@@ -121,9 +122,6 @@ wellnessJon$NutritionAdjustment=ifelse(wellnessJon$NutritionAdjustment=='Yes', 1
 
 wellnessJon<- wellnessJon[-c(11,17)]
 graph.correlations(wellnessJon, 0.5)
-```
-```{r}
-View()
 ```
 
 
@@ -286,7 +284,179 @@ graph.correlations(Minutes.gps, 0.7)
 graph.correlations(FullDataset, 0.7)
 ```
 
+```{r}
+Full.numeric.data = FullDataset[,map_lgl(FullDataset, is.numeric)]
+linMod <- lm(Fatigue~., data= Full.numeric.data)
 
+#Backwards Elimination
+MSE= (summary(linMod)$sigma)^2
+step(linMod, scale=MSE)
+```
+```{r}
+reducedLinMod <- lm(formula = Fatigue ~ TournamentGame + TeamPointsAllowed + GameID + 
+    PlayerID + Half + MinutesClock + FrameID + Speed + AccelImpulse + 
+    AccelLoad + AccelY + AccelZ + Longitude + Latitude + Duration + 
+    RPE + SessionLoad + DailyLoad + AcuteLoad + ChronicLoad + 
+    AcuteChronicRatio + ObjectiveRating + Soreness + Desire + 
+    Irritability + SleepQuality + MonitoringScore + USG, data = Full.numeric.data)
+```
+
+```{r}
+Variables <- c("TournamentGame", "TeamPointsAllowed", "GameID", "PlayerID", "Half", "MinutesClock", "FrameID", "Speed", "AccelImpulse", "AccelLoad", "AccelY", "AccelZ", "Longitude", "Latitude", "Duration", "RPE", "SessionLoad", "DailyLoad", "AcuteLoad", "ChronicLoad", "AcuteChronicRatio", "ObjectiveRating", "Soreness", "Desire", "Irritability", "SleepQuality", "MonitoringScore", "USG")
+
+for(v in Variables) {
+  plot(FullDataset$Fatigue, FullDataset[,v], ylab = v, xlab = "Fatigue")
+}
+```
+```{r}
+for(v in Variables) {
+  plot(log(FullDataset$Fatigue), FullDataset[,v], ylab = v, xlab = "log of Fatigue")
+}
+```
+
+#Graphing Top Correlations with Fatigue
+```{r}
+#Function that Returns Graphs of the variables with the greatest correlations
+graph.correlations.specific <- function(data, c, variable) {
+  data <- data[,map_lgl(data, is.numeric)]
+  #Correlation of all Variables
+  correlation.matrix <- cor(data[,variable], data)
+  correlation.dataset <- as.data.frame(correlation.matrix)
+  most.correlation <- which(abs(correlation.matrix) < 1 & abs(correlation.matrix) > c)
+
+  rows.list <- list()
+  columns.list <- list()
+  j <- 1
+  #For Loop for finding maximum correlations
+  for(i in most.correlation) {
+    #Correlation
+    row <- ceiling(i/ncol(data))
+    column <- ifelse(i%%ncol(data) == 0, ncol(data), i%%ncol(data))
+    rows.list[[j]] <- rownames(correlation.dataset[row,])
+    columns.list[[j]] <- names(correlation.dataset)[column]
+    j = j+1
+  }
+
+  row.column.names = cbind(rows.list, columns.list)
+
+  #New Dataframe To hold Rows/ Columns
+  row.column.dataframe <- data.frame(
+    row = NULL,
+    column = NULL
+  )
+  #putting values in dataframe
+  for(i in 1:length(rows.list)) {
+    newRow = data.frame(row = rows.list[[i]], column = columns.list[[i]])
+    row.column.dataframe <- rbind(row.column.dataframe, newRow)
+  }
+
+  #Changing variable types to character
+  row.column.dataframe$row <- as.character(row.column.dataframe$row)
+  row.column.dataframe$column <- as.character(row.column.dataframe$column)
+
+  #Removing Duplicates
+  for (i in 1:nrow(row.column.dataframe))
+  {
+      row.column.dataframe[i, ] = sort(row.column.dataframe[i, ])
+  }
+  row.column.dataframe <- row.column.dataframe[!duplicated(row.column.dataframe),]
+
+  #Dataframe of Variables with the most Correlation
+  table <- row.column.dataframe
+  
+  #creates new dataframe without correlations above c
+  new.data = data
+  for(i in 1:nrow(table)) {
+    new.data[,table[i,2]] <- NULL
+  }
+  
+  #For Loop For Creating Scatterplots of data with the Greatest Correlation
+  for(i in 1:nrow(row.column.dataframe)) {
+    #Extract column and row variable
+    row <- row.column.dataframe[[i, 1]]
+    column <- row.column.dataframe[[i, 2]]
+    #Plot
+    print(ggplot(data) +
+      geom_point(aes_string(x = row, y = column), color = "blue4") +
+      geom_smooth(aes_string(x = row, y = column)) +
+      theme_minimal() +
+      ggtitle("Correlations"))
+  }
+}
+```
+
+```{r}
+graph.correlations.specific <- function(data, c, string_variable) {
+  data <- data[, map_lgl(data, is.numeric)]
+  no.na <- na.omit(data)
+  correlations <- as.data.frame(cor(no.na[,string_variable], no.na))
+  correlations <- gather(correlations, key = "Variables", value = "Correlations")
+  max.correlations <- filter(correlations, Correlations > c & Correlations < 1)
+  max.correlations
+
+  for(v in max.correlations$Variables) {
+    print(ggplot(data) +
+      geom_point(aes_string(x = v, y = string_variable)) +
+      geom_smooth(aes_string(x = v, y = string_variable), , method = "lm")
+    )
+  }
+}
+```
+
+
+```{r}
+graph.correlations.specific(FullDataset, 0.5, "AcuteChronicRatio")
+```
+
+```{r}
+no.na <- na.omit(Full.numeric.data)
+linMod.ratio <- lm(AcuteChronicRatio~., data = select(no.na, -contains("Load")))
+#Backwards Elimination
+MSE= (summary(linMod.ratio)$sigma)^2
+step(linMod.ratio, scale=MSE)
+```
+
+```{r}
+#removed acute and chronic load
+reducedMod.ratio <- lm(formula = AcuteChronicRatio ~ TeamPoints + TeamPointsAllowed + 
+    GameID + PlayerID + Speed + AccelImpulse + AccelX + AccelY + 
+    AccelZ + Longitude + RPE + ObjectiveRating + FocusRating + 
+    Fatigue + Soreness + Desire + Irritability + SleepHours + 
+    SleepQuality + USG, data = select(no.na, -contains("Load")))
+
+summary(reducedMod.ratio)
+```
+
+```{r}
+FullDataset = mutate(FullDataset,
+                     Group = ifelse(AcuteChronicRatio > 1.2, "Fatigued",
+                                    ifelse(AcuteChronicRatio < 0.8, "Recovering", "Safe Range")),
+                     isSafe = ifelse(AcuteChronicRatio > 1.2, "No", "Yes"))
+
+```
+```{r}
+ggplot(filter(FullDataset, !is.na(Group))) +
+  geom_point(aes(x = AccelX, y = AccelY, col = Group), size = 3)
+```
+
+```{r}
+ggplot(filter(FullDataset, !is.na(Group))) +
+  geom_point(aes(x = AccelX, y = AccelY, col = isSafe), size = 1)
+
+ggplot(filter(FullDataset, !is.na(Group))) +
+  geom_point(aes(x = AccelX, y = AccelZ, col = isSafe), size = 1)
+
+ggplot(filter(FullDataset, !is.na(Group))) +
+  geom_point(aes(x = AccelY, y = AccelZ, col = isSafe), size = 1)
+```
+```{r}
+ggplot(filter(FullDataset, !is.na(Group))) +
+  geom_boxplot(aes(x = isSafe, y = Fatigue, fill = isSafe))
+```
+```{r}
+ggplot(filter(FullDataset, !is.na(Group)))
+  geom_boxplot(aes(x = isSafe, y = AccelZ, fill = isSafe))
+```
 
 
 
@@ -346,6 +516,10 @@ ggplot(na.omit(FullDataset), aes(x = Menstruation, y = Desire)) +
 ```{r}
 #I think yes! - and so does this p value!
 summary(aov(Fatigue~Menstruation, data= FullDataset))
+```
+
+```{r}
+filter(gps, PlayerID == 1)
 ```
 
 --------------------------------------------------------------
